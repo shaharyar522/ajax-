@@ -1,18 +1,3 @@
-<?php
-//connection here
-$connection = mysqli_connect("localhost", "root", "", "ajax");
-//uay hamray pass jo hum ny ny form say id say value get kar kay ek variable main dalli hain pht bad main ajax main ja kar key or dia
-// hian us ko hum ny ek or variable main store kr kay query main dalla hian value ki jaga 
-$new_name = $_POST['full_name'];
-$new_user_name = $_POST['user_name'];
-$new_password = $_POST['patteran'];
-
-
-$query = "INSERT INTO form_insert (full_name, last_name,password) VALUES ($new_name, $new_user_name, $new_password)";
-
-
-$result = mysqli_query($conn, $query);
-?>
 
 
 <!DOCTYPE html>
@@ -197,20 +182,19 @@ $result = mysqli_query($conn, $query);
             <h2>Create Account</h2>
             <p>Fill in your details to get started</p>
         </div>
-
-        <form action="POST">
+        <form action="#" method="POST" id="userForm">
             <div class="form-group floating-label">
-                <input type="text" class="form-control" name="full_name" placeholder="" id="textfullname" required>
+                <input type="text" class="form-control"  placeholder="" id="textfullname" required>
                 <label for="textfullname">Full Name</label>
             </div>
 
             <div class="form-group floating-label">
-                <input type="text" class="form-control" name="last_name" placeholder="" id="textusername" required>
+                <input type="text" class="form-control"  placeholder="" id="textusername" required>
                 <label for="textusername">Username</label>
             </div>
 
             <div class="form-group floating-label">
-                <input type="password" class="form-control" name="password" placeholder="" id="textpassword" required>
+                <input type="password" class="form-control"  placeholder="" id="textpassword" required>
                 <label for="textpassword">Password</label>
             </div>
 
@@ -220,15 +204,18 @@ $result = mysqli_query($conn, $query);
 
     <!-- working on jquey and ajax -->
     <script>
-        $(document).ready(function() {
-            $("#btninsert").on("click", function() {
+        $(document).ready(function() 
+        {
+            $("#btninsert").on("click", function(e) 
+            {
+                e.preventDefault(); // Prevent form from submitting normally
                 // ab main chata hun agar click hnva hia tu pahly us ko get karna hnga 
                 var fullname = $("#textfullname").val();
                 var username = $("#textusername").val();
                 var password = $("#textpassword").val();
 
                 $.ajax({
-                    url:window.location.href,
+                    url:"insert1_ajx.php",
                     type: "POST",
                     data: {
                         full_name: fullname,
@@ -236,6 +223,10 @@ $result = mysqli_query($conn, $query);
                         patteran: password
                     },
                     success: function(mydata) {
+                        // ab main chata hun kay agar  form main data fill hn jain us kay bad form empty hn jian
+                        $("#textfullname").val("");
+                        $("#textusername").val("");
+                        $("#textpassword").val("");
 
                     }
                 });
